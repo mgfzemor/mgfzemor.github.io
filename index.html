@@ -1,1 +1,333 @@
-Hello World
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AtivaMente AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#4cd137;--gl:#78ec52;--gp:#c8e619;
+  --dark:#0c0f0c;--s1:#141914;--s2:#1b211b;
+  --bd:rgba(76,209,55,0.13);--bd2:rgba(76,209,55,0.28);
+  --txt:#dff0d8;--muted:#4a6645;
+  --mono:'DM Mono',monospace;--disp:'Syne',sans-serif;
+}
+
+html,body{height:100%;overflow:hidden}
+
+body{
+  font-family:var(--mono);
+  background:var(--dark);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between;
+  min-height:100vh;
+  padding:0;
+  position:relative;
+  overflow:hidden;
+}
+
+/* grid */
+body::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(76,209,55,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(76,209,55,0.04) 1px,transparent 1px);
+  background-size:32px 32px;
+  pointer-events:none;z-index:0;
+}
+
+/* radial glow centre */
+.glow-centre{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-60%);
+  width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(76,209,55,0.09) 0%,transparent 68%);
+  pointer-events:none;z-index:0;
+  animation:glow-pulse 4s ease-in-out infinite;
+}
+@keyframes glow-pulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+/* ── HEADER ── */
+header{
+  width:100%;padding:28px 40px 0;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+  animation:fade-down .8s ease both;
+}
+@keyframes fade-down{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+
+.logo{
+  font-family:var(--disp);font-size:22px;font-weight:800;
+  color:#fff;letter-spacing:.04em;
+  display:flex;align-items:center;gap:10px;
+}
+.logo-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--g);
+  box-shadow:0 0 10px var(--g);
+  animation:dot-pulse 2s ease-in-out infinite;
+}
+@keyframes dot-pulse{0%,100%{box-shadow:0 0 6px var(--g)}50%{box-shadow:0 0 18px var(--g),0 0 30px rgba(76,209,55,0.3)}}
+
+/* ── CENTRE STAGE ── */
+.stage{
+  display:flex;flex-direction:column;align-items:center;
+  gap:0;position:relative;z-index:2;
+  flex:1;justify-content:center;
+  animation:fade-up 1s ease .3s both;
+}
+@keyframes fade-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* BUBBLE */
+.bubble-area{
+  min-height:62px;display:flex;
+  align-items:flex-end;justify-content:center;
+  margin-bottom:2px;
+}
+.bubble{
+  background:var(--s2);
+  border:1px solid var(--bd2);
+  border-radius:14px;
+  padding:11px 18px;
+  max-width:340px;min-width:220px;min-height:44px;
+  font-size:14px;line-height:1.65;
+  color:var(--txt);position:relative;
+  box-shadow:0 0 28px rgba(76,209,55,0.09);
+  text-align:center;
+}
+.bubble::after{
+  content:'';position:absolute;bottom:-10px;left:50%;
+  transform:translateX(-50%);
+  border:6px solid transparent;
+  border-top-color:var(--bd2);
+}
+.bubble::before{
+  content:'';position:absolute;bottom:-7px;left:50%;
+  transform:translateX(-50%);
+  border:6px solid transparent;
+  border-top-color:var(--s2);
+  z-index:1;
+}
+.cursor{
+  display:inline-block;width:2px;height:13px;
+  background:var(--g);margin-left:2px;vertical-align:middle;
+  animation:cur .85s step-end infinite;
+}
+@keyframes cur{0%,100%{opacity:1}50%{opacity:0}}
+
+/* CHARACTER */
+.char-wrap{
+  position:relative;width:150px;height:165px;
+  margin-top:10px;
+}
+.shadow{
+  position:absolute;bottom:1px;left:50%;
+  transform:translateX(-50%);
+  width:70px;height:9px;
+  background:rgba(0,0,0,0.22);border-radius:50%;
+  animation:shadow-idle 2.8s ease-in-out infinite;
+}
+.body{
+  position:absolute;top:10px;left:10px;
+  width:130px;height:130px;
+  animation:float 2.8s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-9px) rotate(1.5deg)}}
+@keyframes shadow-idle{0%,100%{transform:translateX(-50%) scale(1);opacity:.35}50%{transform:translateX(-50%) scale(.62);opacity:.12}}
+
+.diamond{width:130px;height:130px;position:relative}
+.d-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(145deg,var(--gl) 0%,var(--g) 50%,var(--gp) 100%);
+  clip-path:polygon(50% 2%,98% 50%,50% 98%,2% 50%);
+  border-radius:16%;
+  box-shadow:0 0 40px rgba(76,209,55,0.2);
+}
+.d-shine{
+  position:absolute;top:20px;left:25px;
+  width:32px;height:22px;
+  background:rgba(255,255,255,0.22);
+  border-radius:50%;filter:blur(5px);
+}
+.face-panel{
+  position:absolute;top:30px;left:30px;
+  width:70px;height:70px;
+  background:#fff;border-radius:12px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:9px;
+  overflow:hidden;
+}
+.eyes{display:flex;gap:14px;align-items:center}
+.eye{
+  width:14px;height:14px;background:#111;border-radius:3px;
+  position:relative;overflow:hidden;
+  animation:blink 4s ease-in-out infinite;
+}
+.eye.r{animation-delay:.07s}
+.eye::after{content:'';position:absolute;top:2px;right:2px;width:4px;height:4px;background:rgba(255,255,255,0.75);border-radius:50%}
+.mouth{
+  width:20px;height:8px;
+  border:2.5px solid #111;border-top:none;border-radius:0 0 10px 10px;
+  opacity:0;transform:scaleX(0.4);
+  transition:opacity .4s,transform .4s;
+}
+.mouth.open{opacity:1;transform:scaleX(1)}
+
+/* typing state */
+.typing .body{animation:type-bob .55s ease-in-out infinite!important}
+@keyframes type-bob{0%,100%{transform:translateY(-4px) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2.5deg)}}
+.typing .mouth{opacity:1!important;transform:scaleX(1.1)!important}
+.typing .eye{animation:blink .7s ease-in-out infinite!important}
+
+/* happy state */
+.happy .body{animation:happy-bounce 1.2s ease-in-out infinite}
+@keyframes happy-bounce{0%,100%{transform:translateY(0) rotate(0) scale(1)}40%{transform:translateY(-11px) rotate(1deg) scale(1.03)}70%{transform:translateY(-4px) rotate(-.5deg) scale(1.01)}}
+.happy .mouth{opacity:1;transform:scaleX(1)}
+.happy .face-panel::after{content:'';position:absolute;bottom:15px;left:0;right:0;height:7px;background:linear-gradient(90deg,transparent 8%,rgba(255,140,140,0.22) 22%,transparent 38%,transparent 62%,rgba(255,140,140,0.22) 78%,transparent 92%);pointer-events:none}
+
+@keyframes blink{0%,88%,100%{transform:scaleY(1)}91%,96%{transform:scaleY(0.05)}}
+
+/* nametag */
+.nametag{
+  font-family:var(--disp);font-size:11px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-top:4px;
+}
+
+/* ── FOOTER ── */
+footer{
+  width:100%;padding:0 40px 32px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  position:relative;z-index:2;
+  animation:fade-up 1s ease .6s both;
+}
+.soon-label{
+  font-family:var(--disp);font-size:13px;font-weight:600;
+  color:var(--muted);letter-spacing:.18em;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+}
+.soon-label span{color:var(--g)}
+.soon-line{width:48px;height:1px;background:var(--bd2)}
+
+/* corner decorations */
+.corner{position:absolute;width:60px;height:60px;z-index:1;opacity:.35}
+.corner.tl{top:0;left:0;border-top:1px solid var(--g);border-left:1px solid var(--g)}
+.corner.tr{top:0;right:0;border-top:1px solid var(--g);border-right:1px solid var(--g)}
+.corner.bl{bottom:0;left:0;border-bottom:1px solid var(--g);border-left:1px solid var(--g)}
+.corner.br{bottom:0;right:0;border-bottom:1px solid var(--g);border-right:1px solid var(--g)}
+</style>
+</head>
+<body>
+
+<div class="glow-centre"></div>
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    AtivaMente AI
+  </div>
+</header>
+
+<!-- STAGE -->
+<div class="stage">
+  <div class="bubble-area">
+    <div class="bubble">
+      <span id="bt"></span><span class="cursor"></span>
+    </div>
+  </div>
+
+  <div class="char-wrap" id="prompt">
+    <div class="shadow"></div>
+    <div class="body">
+      <div class="diamond">
+        <div class="d-bg"></div>
+        <div class="d-shine"></div>
+        <div class="face-panel">
+          <div class="eyes">
+            <div class="eye l"></div>
+            <div class="eye r"></div>
+          </div>
+          <div class="mouth" id="mouth"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nametag">Prompt</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="soon-label">
+    <div class="soon-line"></div>
+    <span>AtivaMente AI</span> em breve
+    <div class="soon-line"></div>
+  </div>
+</footer>
+
+<script>
+const messages = [
+  { text: "Olá, eu sou o Prompt... sou o agente oficial da AtivaMente AI ✦", end: "idle" },
+  { text: "Eu irei te ajudar na sua jornada no mundo do pensamento lógico ^^", end: "happy" },
+  { text: "Por enquanto ainda estou estruturando nossa jornada, mas espero te ver em breve!", end: "happy" },
+];
+
+let msgIndex = 0;
+let typeTimer = null;
+
+function applyState(s) {
+  document.getElementById('prompt').className = 'char-wrap ' + s;
+}
+
+function typeMessage(msg, onDone) {
+  const bt = document.getElementById('bt');
+  bt.textContent = '';
+  applyState('typing');
+  let i = 0;
+  const speed = msg.length > 50 ? 26 : 34;
+  typeTimer = setInterval(() => {
+    bt.textContent = msg.slice(0, ++i);
+    if (i >= msg.length) {
+      clearInterval(typeTimer);
+      if (onDone) onDone();
+    }
+  }, speed);
+}
+
+function eraseMessage(onDone) {
+  const bt = document.getElementById('bt');
+  const txt = bt.textContent;
+  let i = txt.length;
+  const t = setInterval(() => {
+    bt.textContent = txt.slice(0, --i);
+    if (i <= 0) { clearInterval(t); if (onDone) onDone(); }
+  }, 14);
+}
+
+function runSequence() {
+  const m = messages[msgIndex % messages.length];
+  typeMessage(m.text, () => {
+    applyState(m.end);
+    const isLast = (msgIndex % messages.length) === messages.length - 1;
+    const gapAfter = isLast ? 30000 : 600;
+    setTimeout(() => {
+      eraseMessage(() => {
+        applyState('idle');
+        msgIndex++;
+        setTimeout(runSequence, gapAfter);
+      });
+    }, 10000);
+  });
+}
+
+setTimeout(runSequence, 1200);
+</script>
+</body>
+</html>
